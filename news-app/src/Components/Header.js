@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({setCategory}) => {
     return(
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#"><span className='badge bg-light text-dark fs-4'>NEWS APP</span></a>
@@ -9,10 +9,8 @@ const Header = () => {
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Features</a>
-      <a class="nav-item nav-link" href="#">Pricing</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+      <div class="nav-link" onClick={() => setCategory ("technology")}>technology</div> 
+      <div class="nav-link">Indonesia</div>  
     </div>
   </div>
 </nav>
