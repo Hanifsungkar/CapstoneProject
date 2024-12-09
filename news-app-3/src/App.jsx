@@ -8,10 +8,14 @@ const App = () => {
   const [query, setQuery] = useState("")
 
   return (
+    <Router>
     <div>
       <Navbar setCategory={setCategory} setQuery={setQuery}/>
+      <Routes>
       <NewsBoard category={category} query={query}/>
+      </Routes>
     </div>
+    </Router>
   )
 }
 
