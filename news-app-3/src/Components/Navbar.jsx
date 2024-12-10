@@ -1,12 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({setCategory, setQuery}) => {
   const [searchTerm, setSearchTerm] = useState("")
+  const navigate = useNavigate()
 
-  const handlesearch = (e) => {
-    e.preventDefault();
-    setQuery(searchTerm);
+  const handleCategoryClick = (category) => {
+    setCategory(category)
+    setQuery("")
+    navigate(`/${category}`)
   }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== "") {
+      setQuery(searchTerm); // Set query state
+      navigate(`/search/${encodeURIComponent(searchTerm)}`); // Ubah URL sesuai query pencarian
+    }
+  };
+
+  // const handlesearch = (e) => {
+  //   e.preventDefault()
+  //   setCategory("")
+  //   setQuery(searchTerm)
+  //   navigate(`/${searchTerm}`)
+  // }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,13 +41,13 @@ const Navbar = ({setCategory, setQuery}) => {
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav">
         <li className="nav-item">
-          <div className="nav-link" onClick={()=> setCategory("indonesia")}>Indonesia</div>
+          <div className="nav-link" onClick={()=> handleCategoryClick("indonesia")}>Indonesia</div>
         </li>
         <li className="nav-item">
-          <div className="nav-link" onClick={()=> setCategory("programming")}>Programming</div>
+          <div className="nav-link" onClick={()=> handleCategoryClick("programming")}>Programming</div>
         </li>
       </ul>
-      <form className='d-flex ms-auto' onSubmit={handlesearch}>
+      <form className='d-flex ms-auto' onSubmit={handleSearch}>
         <input
         type='text'
         className='form-ccontol me-2'
