@@ -19,12 +19,9 @@ const Navbar = ({setCategory, setQuery}) => {
     }
   };
 
-  // const handlesearch = (e) => {
-  //   e.preventDefault()
-  //   setCategory("")
-  //   setQuery(searchTerm)
-  //   navigate(`/${searchTerm}`)
-  // }
+  const goToSavedArticles = () => {
+    navigate('/savedarticles'); // Navigasi ke halaman Saved Articles
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,6 +43,11 @@ const Navbar = ({setCategory, setQuery}) => {
         <li className="nav-item">
           <div className="nav-link" onClick={()=> handleCategoryClick("programming")}>Programming</div>
         </li>
+        <li className="nav-item">
+            <div className="nav-link" onClick={goToSavedArticles}>
+              Saved Articles
+            </div>
+          </li>
       </ul>
       <form className='d-flex ms-auto' onSubmit={handleSearch}>
         <input
@@ -64,3 +66,10 @@ const Navbar = ({setCategory, setQuery}) => {
 }
 
 export default Navbar
+
+ // const handlesearch = (e) => {
+  //   e.preventDefault()
+  //   setCategory("")
+  //   setQuery(searchTerm)
+  //   navigate(`/${searchTerm}`)
+  // }
