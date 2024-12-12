@@ -38,6 +38,34 @@ const NewsBoard = ({category, query}) => {
     alert('Article saved!');
   };
 
+  return (
+    <div>
+        <h2 className='text-center'>Featured <span className='badge bg-danger'>News</span></h2>
+        {articles.map((item)=>{
+           return <NewsItem 
+           key={item.web_url} 
+           title={item.abstract} 
+           description={item.lead_paragraph} 
+           url={item.web_url}
+           imageUrl={
+            item.multimedia && item.multimedia.length > 0
+              ? `https://www.nytimes.com/${item.multimedia[0].url}`
+              : null }
+           saveArticle={() =>
+            saveArticle({
+              title: item.abstract,
+              description: item.lead_paragraph,
+              url: item.web_url,
+            })
+          }
+           />
+        })}
+    </div>
+  )
+}
+
+export default NewsBoard
+
   //   axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
   //   params: {
   //     'q':`${category}`,
@@ -49,42 +77,19 @@ const NewsBoard = ({category, query}) => {
   //   })
   // }, [category])
 
-  return (
-    <div>
-        <h2 className='text-center'>Featured <span className='badge bg-danger'>News</span></h2>
-        {articles.map((item)=>{
-           return <NewsItem 
-           key={item.web_url} 
-           title={item.abstract} 
-           description={item.lead_paragraph} 
-           url={item.web_url}
-           saveArticle={() =>
-            saveArticle({
-              title: item.abstract,
-              description: item.lead_paragraph,
-              url: item.web_url,
-            })
-          }
-           />
-        })}
-         <div className="mt-5">
-        <h3>Saved Articles</h3>
-        {savedArticles.length > 0 ? (
-          savedArticles.map((article, index) => (
-            <div key={index} className="mb-3">
-              <h5>{article.title}</h5>
-              <p>{article.description}</p>
-              <a href={article.url} target="_blank" rel="noopener noreferrer">
-                Read More
-              </a>
-            </div>
-          ))
-        ) : (
-          <p>No saved articles yet.</p>
-        )}
-      </div>
-    </div>
-  )
-}
-
-export default NewsBoard
+  // <div className="mt-5">
+  //       <h3>Saved Articles</h3>
+  //       {savedArticles.length > 0 ? (
+  //         savedArticles.map((article, index) => (
+  //           <div key={index} className="mb-3">
+  //             <h5>{article.title}</h5>
+  //             <p>{article.description}</p>
+  //             <a href={article.url} target="_blank" rel="noopener noreferrer">
+  //               Read More
+  //             </a>
+  //           </div>
+  //         ))
+  //       ) : (
+  //         <p>No saved articles yet.</p>
+  //       )}
+  //     </div>
