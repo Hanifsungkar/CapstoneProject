@@ -14,13 +14,13 @@ const Navbar = ({setCategory, setQuery}) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
-      setQuery(searchTerm); // Set query state
-      navigate(`/search/${encodeURIComponent(searchTerm)}`); // Ubah URL sesuai query pencarian
+      setQuery(searchTerm);
+      navigate(`/search/${encodeURIComponent(searchTerm)}`);
     }
   };
 
   const goToSavedArticles = () => {
-    navigate('/savedarticles'); // Navigasi ke halaman Saved Articles
+    navigate('/savedarticles');
   };
 
   return (

@@ -34,7 +34,7 @@ const NewsBoard = ({category, query}) => {
   }, [urlQuery, query, category])
 
   const saveArticle = (article) => {
-    setSavedArticles((prev) => [...prev, article]); // Tambahkan artikel ke array savedArticles
+    setSavedArticles((prev) => [...prev, article]);
     alert('Article saved!');
   };
 

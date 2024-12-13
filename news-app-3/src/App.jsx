@@ -29,11 +29,11 @@ const App = () => {
     {/* <div> */}
       <Navbar setCategory={setCategory} setQuery={setQuery}/>
       <Routes>
-        <Route 
+        {/* <Route 
         path="/" element={<NewsBoard category={category} />} 
-        />
+        /> */}
         <Route
-        path='/indonesia' element={<NewsBoard category="indonesia" query={query}/>}
+        path='/' element={<NewsBoard category="indonesia" query={query}/>}
         />
         <Route
         path='/programming' element={<NewsBoard category="programming" query={query}/>}

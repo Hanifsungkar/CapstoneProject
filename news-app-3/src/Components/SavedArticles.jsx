@@ -3,6 +3,7 @@ import { SavedArticlesContext } from '../Context/SavedArticlesContext';
 
 const SavedArticles = () => {
     const { savedArticles, removeArticle } = useContext(SavedArticlesContext);
+    
     return (
         <div>
           <h2 className="text-center">Saved Articles</h2>
