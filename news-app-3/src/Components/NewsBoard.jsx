@@ -41,6 +41,10 @@ const NewsBoard = ({category, query}) => {
   return (
     <div>
         <h2 className='text-center'>Featured <span className='badge bg-danger'>News</span></h2>
+        <div
+      className="d-flex flex-wrap justify-content-center gap-3"
+      style={{ margin: '20px auto', maxWidth: '1200px' }}
+    >
         {articles.map((item)=>{
            return <NewsItem 
            key={item.web_url} 
@@ -60,6 +64,7 @@ const NewsBoard = ({category, query}) => {
           }
            />
         })}
+    </div>
     </div>
   )
 }
