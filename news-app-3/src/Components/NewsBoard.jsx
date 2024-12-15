@@ -1,37 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchArticles } from '../store/action';
 import NewsItem from './NewsItem';
-import axios from 'axios';
+// import axios from 'axios';
 
 const NewsBoard = ({category, query}) => {
   // const { queryOrCategory } = useParams()
-  const [articles, setArticles] = useState ([])
+  // const [articles, setArticles] = useState ([])
+  const { query: urlQuery } = useParams()
+  const dispatch = useDispatch()
+  const { articles, loading, error } = useSelector((state) => state)
   const [savedArticles, setSavedArticles] = useState([])
 
-  const { query: urlQuery } = useParams()
-
   useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const searchTerm = urlQuery || query || category || ""
-        const response = await axios.get (
-          "https://api.nytimes.com/svc/search/v2/articlesearch.json",
-          {
-            params: {
-              q: searchTerm,
-              "api-key": `${process.env.REACT_APP_API_KEY}`
-            },
-          }
-        )
-        // console.log(response.data)
-        setArticles(response.data.response.docs)
-      } catch (error) {
-        console.error("Error fetching articles", error)
-      }
-    }
+    const searchTerm = urlQuery || query || category || ''
+    dispatch(fetchArticles(searchTerm))
+  }, [dispatch, urlQuery, query, category])
 
-    fetchArticles()
-  }, [urlQuery, query, category])
+  if (loading) {
+    return <h2>Loading...</h2>
+  }
+
+  if (error) {
+    return <h2>Error: {error}</h2>
+  }
+
+  //   const fetchArticles = async () => {
+  //     try {
+  //       const searchTerm = urlQuery || query || category || ""
+  //       const response = await axios.get (
+  //         "https://api.nytimes.com/svc/search/v2/articlesearch.json",
+  //         {
+  //           params: {
+  //             q: searchTerm,
+  //             "api-key": `${process.env.REACT_APP_API_KEY}`
+  //           },
+  //         }
+  //       )
+  //       // console.log(response.data)
+  //       setArticles(response.data.response.docs)
+  //     } catch (error) {
+  //       console.error("Error fetching articles", error)
+  //     }
+  //   }
+
+  //   fetchArticles()
+  // }, [urlQuery, query, category])
 
   const saveArticle = (article) => {
     setSavedArticles((prev) => [...prev, article]);
@@ -70,31 +85,3 @@ const NewsBoard = ({category, query}) => {
 }
 
 export default NewsBoard
-
-  //   axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
-  //   params: {
-  //     'q':`${category}`,
-  //     'api-key': `${process.env.REACT_APP_API_KEY}`
-  //   }
-  //   })
-  //   .then(res => {
-  //     setArticles(res.data.response.docs)
-  //   })
-  // }, [category])
-
-  // <div className="mt-5">
-  //       <h3>Saved Articles</h3>
-  //       {savedArticles.length > 0 ? (
-  //         savedArticles.map((article, index) => (
-  //           <div key={index} className="mb-3">
-  //             <h5>{article.title}</h5>
-  //             <p>{article.description}</p>
-  //             <a href={article.url} target="_blank" rel="noopener noreferrer">
-  //               Read More
-  //             </a>
-  //           </div>
-  //         ))
-  //       ) : (
-  //         <p>No saved articles yet.</p>
-  //       )}
-  //     </div>
