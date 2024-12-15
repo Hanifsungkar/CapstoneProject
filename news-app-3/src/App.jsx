@@ -44,8 +44,8 @@ const App = () => {
         <Route
           path="/savedarticles" element={<SavedArticles savedArticles={SavedArticles} />}
         />
-         <Route path="*" element={<Navigate to="/" replace />} 
-        />
+         {/* <Route path="*" element={<Navigate to="/" replace />} 
+        /> */}
       </Routes>
     {/* </div> */}
     </Router>
