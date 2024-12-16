@@ -2,10 +2,16 @@ const initialState = {
     articles: [],
     loading: false,
     error: null,
+    category: 'indonesia',
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_CATEGORY':
+            return {
+                ...state,
+                category: action.payload,
+            }
         case 'FETCH_ARTICLES_REQUEST':
             return {
             ...state,

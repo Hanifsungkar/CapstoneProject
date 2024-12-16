@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategory } from '../store/action';
 
-const Navbar = ({setCategory, setQuery}) => {
-  const [searchTerm, setSearchTerm] = useState("")
+// const Navbar = ({setCategory, setQuery}) => {
+//   const [searchTerm, setSearchTerm] = useState("")
+//   const navigate = useNavigate()
+
+const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleCategoryClick = (category) => {
-    setCategory(category)
-    setQuery("")
-    navigate(`/${category}`)
+    // setCategory(category)
+    // setQuery("")
+    dispatch(setCategory(category))
+    navigate(category === 'indonesia' ? '/' : `/${category}`)
   }
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
-      setQuery(searchTerm);
       navigate(`/search/${encodeURIComponent(searchTerm)}`);
     }
   };

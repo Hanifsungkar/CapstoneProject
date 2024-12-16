@@ -30,28 +30,13 @@ const App = () => {
     <Provider store={store}>
     <SavedArticlesProvider>
     <Router>
-    {/* <div> */}
       <Navbar />
       <Routes>
-        {/* <Route 
-        path="/" element={<NewsBoard category={category} />} 
-        /> */}
-        <Route
-        path='/' element={<NewsBoard category="indonesia"/>}
-        />
-        <Route
-        path='/programming' element={<NewsBoard category="programming"/>}
-        />
-        <Route 
-        path="/search/:query" element={<NewsBoard/>}
-        />
-        <Route
-          path="/savedarticles" element={<SavedArticles savedArticles={SavedArticles} />}
-        />
-         {/* <Route path="*" element={<Navigate to="/" replace />} 
-        /> */}
+        <Route path='/' element={<NewsBoard/>} />
+        <Route path='/programming' element={<NewsBoard/>} />
+        <Route path="/search/:query" element={<NewsBoard/>} />
+        <Route path="/savedarticles" element={<SavedArticles savedArticles={SavedArticles} />} />
       </Routes>
-    {/* </div> */}
     </Router>
     </SavedArticlesProvider>
     </Provider>
