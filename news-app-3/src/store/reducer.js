@@ -3,10 +3,22 @@ const initialState = {
     loading: false,
     error: null,
     category: 'indonesia',
+    searchTerm: '',
+    theme: 'light',
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'TOGGLE_THEME':
+            return{
+                ...state,
+                theme: state.theme === 'light' ? 'dark' : 'light',
+            }
+        case 'SET_SEARCH_TERM':
+            return {
+                ...state,
+                searchTerm: action.payload,
+            }
         case 'SET_CATEGORY':
             return {
                 ...state,

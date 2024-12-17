@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from '../store/action';
+// import { fetchArticles } from '../store/action';
+import { setCategory, setSearchTerm, fetchSearchArticles, toggleTheme } from '../store/action';
+
 
 // const Navbar = ({setCategory, setQuery}) => {
 //   const [searchTerm, setSearchTerm] = useState("")
 //   const navigate = useNavigate()
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState('')
+  const searchTerm = useSelector((state) => state.searchTerm)
+  const theme = useSelector((state) => state.theme)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -22,6 +25,9 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
+      // dispatch(setSearchTerm(searchTerm))
+      // dispatch(fetchSearchArticles(searchTerm))
+      dispatch(fetchSearchArticles(searchTerm))
       navigate(`/search/${encodeURIComponent(searchTerm)}`);
     }
   };
@@ -31,8 +37,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a className="navbar-brand" href="#"><span className='badge bg-light text-dark fs-4'>News App</span></a>
+    <nav className={`navbar navbar-expand-lg ${theme === 'light' ? 'navbar-light bg-light' : 'navbar-dark bg-dark'}`}>
+    <a className="navbar-brand" href="#"><span className={`badge ${theme === 'light' ? 'bg-dark text-light' : ' bg-light text-dark'} fs-4`}>News App</span></a>
     <button className="navbar-toggler" 
     type="button" 
     data-toggle="collapse" 
@@ -59,24 +65,22 @@ const Navbar = () => {
       <form className='d-flex ms-auto' onSubmit={handleSearch}>
         <input
         type='text'
-        className='form-ccontol me-2'
+        className='form-control me-2'
         placeholder='Search Articles'
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} />
+        onChange={(e) => dispatch (setSearchTerm(e.target.value))} />
         <button className='btn btn-light' type='submit'>
           Search
         </button>
       </form>
+      <button
+          className="btn btn-outline-secondary ms-3"
+          onClick={() => dispatch(toggleTheme())}>
+          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+        </button>
     </div>
   </nav>
   )
 }
 
 export default Navbar
-
- // const handlesearch = (e) => {
-  //   e.preventDefault()
-  //   setCategory("")
-  //   setQuery(searchTerm)
-  //   navigate(`/${searchTerm}`)
-  // }

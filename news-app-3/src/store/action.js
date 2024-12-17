@@ -1,5 +1,35 @@
 import axios from 'axios';
 
+// Dark/Light Mode
+export const toggleTheme = () => ({
+    type: 'TOGGLE_THEME',
+})
+
+// Search Articles
+export const setSearchTerm = (query) => ({
+    type: 'SET_SEARCH_TERM',
+    payload: query,
+})
+
+export const fetchSearchArticles = (searchTerm) => async (dispatch) => {
+    dispatch(fetchArticlesRequest())
+    try {
+        const response = await axios.get(
+            'https://api.nytimes.com/svc/search/v2/articlesearch.json',
+            {
+                params: {
+                    q: searchTerm,
+                    'api-key': process.env.REACT_APP_API_KEY,
+                },
+            }
+        )
+        dispatch(fetchArticlesSuccess(response.data.response.docs))
+    } catch (error) {
+        dispatch(fetchArticlesFailure(error.message))
+    }
+}
+
+// Fetch Articles
 export const fetchArticlesRequest = () => ({
     type: 'FETCH_ARTICLES_REQUEST'
 })
@@ -32,6 +62,7 @@ export const fetchArticles = (searchTerm) => async (dispatch) => {
     }
 }
 
+// Article Category (Indonesia & Programming)
 export const setCategory = (category) => ({
     type: 'SET_CATEGORY',
     payload: category,
