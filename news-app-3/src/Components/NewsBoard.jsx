@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchArt } from '../store/action';
+import { fetchArt, saveArticle } from '../store/action';
 import NewsItem from './NewsItem';
 
 const NewsBoard = () => {
@@ -12,14 +11,6 @@ const NewsBoard = () => {
   const category = useSelector((state) => state.category);
   const searchTerm = useSelector((state) => state.searchTerm);
   const theme = useSelector((state) => state.theme)
-
-  // const { articles, loading, error, category, searchTerm } = useSelector((state) => state)
-  const [savedArticles, setSavedArticles] = useState([])
-  
-  // useEffect(() => {
-  //   const searchTerm = urlQuery || query || category || ''
-  //   dispatch(fetchArticles(searchTerm))
-  // }, [dispatch, urlQuery, query, category])
 
   useEffect(() => {
     dispatch(fetchArt(category))
@@ -33,11 +24,6 @@ const NewsBoard = () => {
     return <h2>Error: {error}</h2>
   }
 
-  const saveArticle = (article) => {
-    setSavedArticles((prev) => [...prev, article]);
-    alert('Article saved!');
-  };
-
   return (
     <div className={`p-4 ${theme === 'light' ? 'bg-white text-dark' : 'bg-dark text-light'}`}
     style={{ minHeight: '100vh' }}>
@@ -45,7 +31,6 @@ const NewsBoard = () => {
         Featured <span className={`badge ${theme === 'light' ? 'bg-danger' : 'bg-warning'}`}>News</span>
       </h2>
 
-      {/* Loading State */}
       {loading && (
         <div className="text-center my-4">
           <div className="spinner-border text-primary" role="status">
@@ -54,14 +39,12 @@ const NewsBoard = () => {
         </div>
       )}
 
-      {/* Error State */}
       {error && (
         <div className="text-center text-danger my-4">
           <p>Error: {error}</p>
         </div>
       )}
 
-      {/* Articles Section */}
       {!loading && !error && (
         <div
           className="d-flex flex-wrap justify-content-center gap-3"
@@ -78,7 +61,7 @@ const NewsBoard = () => {
                   imageUrl={
                     item.multimedia && item.multimedia.length > 0
                       ? `https://www.nytimes.com/${item.multimedia[0].url}`
-                      : 'https://via.placeholder.com/200' // Fallback image
+                      : 'https://via.placeholder.com/200'
                   }
                   saveArticle={() =>
                     saveArticle({
@@ -100,34 +83,3 @@ const NewsBoard = () => {
 };
 
 export default NewsBoard
-
-//   return (
-//     <div>
-//         <h2 className='text-center'>Featured <span className='badge bg-danger'>News</span></h2>
-//         <div
-//       className="d-flex flex-wrap justify-content-center gap-3"
-//       style={{ margin: '20px auto', maxWidth: '1200px' }}
-//     >
-//         {articles.map((item)=>{
-//            return <NewsItem 
-//            key={item.web_url} 
-//            title={item.abstract} 
-//            description={item.lead_paragraph} 
-//            url={item.web_url}
-//            imageUrl={
-//             item.multimedia && item.multimedia.length > 0
-//               ? `https://www.nytimes.com/${item.multimedia[0].url}`
-//               : null }
-//            saveArticle={() =>
-//             saveArticle({
-//               title: item.abstract,
-//               description: item.lead_paragraph,
-//               url: item.web_url,
-//             })
-//           }
-//            />
-//         })}
-//     </div>
-//     </div>
-//   )
-// }

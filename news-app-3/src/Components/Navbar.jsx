@@ -1,13 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { fetchArticles } from '../store/action';
 import { setCategory, setSearchTerm, fetchSearchArticles, toggleTheme } from '../store/action';
-
-
-// const Navbar = ({setCategory, setQuery}) => {
-//   const [searchTerm, setSearchTerm] = useState("")
-//   const navigate = useNavigate()
 
 const Navbar = () => {
   const searchTerm = useSelector((state) => state.searchTerm)
@@ -16,8 +10,6 @@ const Navbar = () => {
   const dispatch = useDispatch()
 
   const handleCategoryClick = (category) => {
-    // setCategory(category)
-    // setQuery("")
     dispatch(setCategory(category))
     navigate(category === 'indonesia' ? '/' : `/${category}`)
   }
@@ -25,8 +17,6 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
-      // dispatch(setSearchTerm(searchTerm))
-      // dispatch(fetchSearchArticles(searchTerm))
       dispatch(fetchSearchArticles(searchTerm))
       navigate(`/search/${encodeURIComponent(searchTerm)}`);
     }
@@ -62,6 +52,11 @@ const Navbar = () => {
             </div>
           </li>
       </ul>
+      <button
+          className="btn btn-outline-secondary ms-3"
+          onClick={() => dispatch(toggleTheme())}>
+          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+        </button>
       <form className='d-flex ms-auto' onSubmit={handleSearch}>
         <input
         type='text'
@@ -73,11 +68,6 @@ const Navbar = () => {
           Search
         </button>
       </form>
-      <button
-          className="btn btn-outline-secondary ms-3"
-          onClick={() => dispatch(toggleTheme())}>
-          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-        </button>
     </div>
   </nav>
   )

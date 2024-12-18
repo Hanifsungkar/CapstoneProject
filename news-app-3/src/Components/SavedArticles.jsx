@@ -1,9 +1,16 @@
-import React, {useContext} from 'react';
-import { SavedArticlesContext } from '../Context/SavedArticlesContext';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeArticle } from '../store/action';
 
 const SavedArticles = () => {
-    const { savedArticles, removeArticle } = useContext(SavedArticlesContext);
+    const dispatch = useDispatch()
+    const savedArticles = useSelector((state) => state.savedArticles)
     
+    const handleRemoveArticle = (url) => {
+      console.log('Removing article with URL:', url)
+      dispatch(removeArticle(url))
+    }
+
     return (
         <div>
           <h2 className="text-center">Saved Articles</h2>
@@ -18,7 +25,7 @@ const SavedArticles = () => {
                   </a>
                   <button
                     className="btn btn-danger ms-2"
-                    onClick={() => removeArticle(article.url)}
+                    onClick={() => handleRemoveArticle(article.url)}
                   >
                     Remove
                   </button>
@@ -33,30 +40,3 @@ const SavedArticles = () => {
     };
     
     export default SavedArticles;
-
-
-//   return (
-//     <div className="container mt-4">
-//       <h2>Saved Articles</h2>
-//       {savedArticles.length === 0 ? (
-//         <p>No articles saved yet.</p>
-//       ) : (
-//         <ul className="list-group">
-//           {savedArticles.map((article, index) => (
-//             <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-//               <span>{article.title}</span>
-//               <button
-//                 className="btn btn-danger btn-sm"
-//                 onClick={() => removeArticle(index)}
-//               >
-//                 Remove
-//               </button>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default SavedArticles;

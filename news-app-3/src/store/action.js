@@ -78,3 +78,16 @@ export const fetchArt = (query) => async (dispatch) => {
         dispatch({ type: 'FETCH_ARTICLES_FAILURE', payload: error.message})
     }
 }
+
+// Save & Remove Articles
+export const saveArticle = (article) => ({
+    type: 'SAVE_ARTICLE',
+    payload: article,
+})
+
+export const removeArticle = (url) => {
+    return {
+    type: 'REMOVE_ARTICLE',
+    payload: url,
+}
+}

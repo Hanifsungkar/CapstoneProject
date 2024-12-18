@@ -1,5 +1,6 @@
 const initialState = {
     articles: [],
+    savedArticles: [],
     loading: false,
     error: null,
     category: 'indonesia',
@@ -41,6 +42,22 @@ const reducer = (state = initialState, action) => {
             ...state,
             loading: false,
             error: action.payload,
+            }
+        case 'SAVE_ARTICLE': {
+            const articleExists = state.savedArticles.some(
+                (article) => article.url === action.payload.url
+            )
+            return articleExists
+            ? state
+            : { ...state, savedArticles: [...state.savedArticles, action.payload] };
+        }
+        case 'REMOVE_ARTICLE':
+            const updatedArticles = state.savedArticles.filter(
+                (article) => article.url !== action.payload
+            )
+            return {
+                ...state,
+                savedArticles: updatedArticles,
             }
         default:
         return state
